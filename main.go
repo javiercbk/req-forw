@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strconv"
 )
 
 func main() {
@@ -36,7 +37,8 @@ func main() {
 		},
 	}
 	forwardRequestHandler := newRequestForwarder(targetHost, scheme, httpClient)
-	http.ListenAndServe(":8080", forwardRequestHandler)
+	portStr := strconv.Itoa(port)
+	http.ListenAndServe(":"+portStr, forwardRequestHandler)
 }
 
 func newRequestForwarder(target, defaultScheme string, httpClient http.Client) http.HandlerFunc {
